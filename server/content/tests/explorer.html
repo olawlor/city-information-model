@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>Nexus Aurora Mars CIM Explorer</title>
+<script src="/CIM/js/CIM.js" ></script>
+</head>
+<body>
+<h1>Nexus Aurora Mars CIM: Text-based Explorer</h1>
+
+<pre id="history"></pre>
+CIM Species: <input type="text" size=50 id="in" value="Space/Mars" />
+
+<input type="submit" value="Read" onclick="readSpeciesDOM()">
+
+<pre id="out" style="white-space:pre-wrap;"></pre>
+
+<script>
+
+// Emit HTML that adds a species link
+function speciesHyperlink(speciesName) {
+    return '<b><a href=\'javascript:setSpeciesDOM(\"' + speciesName + '\")\' >' 
+                + speciesName + '</a></b>'
+}
+
+// Add javascript links to species in our components
+//   (HACKY regex implementation, but false positives just create bogus local links, not the end of the world)
+function addHyperlinks(text) {
+  var speciesRegex = /"Species": "([^"]+)"/g;
+  return text.replace(speciesRegex, function(line,species) {
+    //console.log("Hotlinking species '"+species+"'");
+    return '"Species": '+speciesHyperlink(species);
+  })
+}
+
+// Read the DOM input field, and show the result to the output field
+function readSpeciesDOM() 
+{
+    var inDOM=document.getElementById("in");
+    var outDOM=document.getElementById("out");
+    var speciesName=inDOM.value;
+    var display=outDOM;
+    CIM.readSpecies(speciesName, function(species) {
+            var str=JSON.stringify(species,null,2);
+            display.innerHTML=addHyperlinks(str); // <- flush DOM children
+            //display.appendChild(document.createTextNode(str));
+        }
+    );
+}
+
+// When a species link is clicked, set the searched species
+function setSpeciesDOM(speciesName)
+{
+    location.hash=speciesName;
+    //  "onhashchange" does the rest
+}
+
+// Return true if the page location hash contains a valid-looking species name
+function locationHashValid() {
+    return location.hash!="" && location.hash.startsWith("#") && location.hash.length>=4;
+}
+
+// Pull the initial species from the URL, if specified
+window.onhashchange=function() {
+    if (locationHashValid()) {
+        var speciesNameEncoded = location.hash.substring(1); // remove '#'
+        document.getElementById("in").value = decodeURIComponent(speciesNameEncoded);
+        readSpeciesDOM();
+    }
+}
+
+
+// This runs on page load:
+if (locationHashValid()) 
+{ // started up with a valid location hash
+    window.onhashchange();
+}
+else 
+{
+    // Just use the initial default species
+    readSpeciesDOM();
+}
+</script>
+
+
+</body>
+</html>
+

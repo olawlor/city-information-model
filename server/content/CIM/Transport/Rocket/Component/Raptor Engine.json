@@ -1,0 +1,17 @@
+{
+  "Metadata":{
+    "Species":"Transport/Rocket/Component/Raptor Engine",
+    "Role":"Rocket Engine",
+    "Author":"Orion Lawlor <lawlor@alaska.edu>",
+    "Version":"2020-07-04 pre-alpha",
+    "Purpose":"Example CIM file, for testing parsing",
+    "Coordinates":"Origin is at the gimbal mount just behind the combustion chamber; Z axis faces opposite the thrust direction"
+  },
+  
+  "Resources":{
+    "Mass":{"Value": 375, "Unit":"kg", "Purpose":"Dry Mass"}
+   }
+  
+  
+}
+

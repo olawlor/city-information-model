@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>CIM Test/Demo Page</title>
+<script src="/CIM/js/CIM.js" ></script>
+</head>
+<body>
+<h1>CIM Test/Demo Page</h1>
+
+<script>
+CIM.readSpecies("Transport/Rocket/Starship", 
+    function(species) {
+        var location=species.Components["Vacuum Engines"][0].At.Location;
+        var str="XYZ location of the first vacuum raptor: "+
+                JSON.stringify(location,null,2)+
+                "\n\n";
+        str+="All Components in a Starship: "+
+                JSON.stringify(species.Components,null,2)+
+                "\n\n";
+        
+        console.log(str);
+        
+        var pre=document.createElement("pre");
+        pre.appendChild(document.createTextNode(str));
+        document.body.appendChild(pre);
+    }
+);
+</script>
+
+</body>
+</html>
+

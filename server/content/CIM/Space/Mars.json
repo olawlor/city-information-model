@@ -1,0 +1,28 @@
+{
+  "Metadata":{
+    "Species":"Space/Mars",
+    "Role":"Planet",
+    "Author":"Orion Lawlor <lawlor@alaska.edu>",
+    "Version":"2020-07-07 pre-alpha",
+    "Purpose":"Anchor all Mars Sphere of Influence (SOI) infrastructure, both surface and orbital, in a common inertial reference frame.",
+    "Coordinates":"Origin is in the exact center of the planet; Z axis runs through north pole; X axis points toward Mars' vernal equinox."
+  },
+  
+  "Traits":{
+    "GM":{"Value":4.28e13, "Unit":"m3/s2", "Purpose":"Newtonian gravity"},
+    "Planet Mass":{"Value":0.64171e24, "Unit":"kg", "Purpose":"Orbital calculations"},
+    "Solar Irradiance":{"Value":586.2, "Unit":"W/m2", "Purpose":"Solar estimate (varies with Ls)"},
+    "Escape Velocity":{"Value":5030, "Unit":"m/s", "Purpose":"Orbital calculations"},
+    "Inclination of Equator":{"Value":25.19, "Unit":"degrees", "Purpose":"Orbital calculations"}
+  },
+  
+  "Components":{
+     "Surface":{
+       "Species":"Space/Mars/Surface","At":{"Location":[0,0,0],"Angle":{"Rotating":[0,0,1.0274875]}}
+     },
+     "Orbit":{
+       "Species":"Space/Mars/Orbit","At":{"Location":[0,0,0],"Angle":[0,0,0]}
+     }
+  }
+}
+

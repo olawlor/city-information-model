@@ -1,0 +1,31 @@
+{
+  "Metadata":{
+    "Species":"Architecture/Temporary Structures/6m",
+    "Role":"Surface Building",
+    "Author":"Orion Lawlor <lawlor@alaska.edu> for this JSON",
+    "Version":"2020-07-10 pre-alpha",
+    "Purpose":"Temporary structure for use on unimproved ground",
+    "Coordinates":"Origin is at the base of the structure.  X points down the length of the structure.  Z is up. "
+  },
+  
+  "Rendering":{
+  },
+  
+  "Components":{
+     "FrontAirlock":{
+        "Species":"Architecture/Temporary Structures/6m Airlock",
+        "At":{"Location":[0,0,0],"Rotation":[0,0,0]}
+     },
+     "BackAirlock":{
+        "Species":"Architecture/Temporary Structures/6m Airlock",
+        "At":{"Location":[26,0,0],"Rotation":[0,0,180]}
+     }
+  },
+  
+  "Volume":{
+    "Type":"Hab",
+    "Purpose":"Interior space of modular hab",
+    "Bound":[3,20, -3,3,0.2,5.6]
+  }
+}
+

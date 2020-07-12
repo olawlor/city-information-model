@@ -1,0 +1,29 @@
+{
+  "Metadata":{
+    "Species":"Transport/Rocket/Starship",
+    "Role":"Rocket",
+    "Author":"Orion Lawlor <lawlor@alaska.edu>",
+    "Version":"2020-07-04 pre-alpha",
+    "Purpose":"Example CIM file, for testing parsing",
+    "Coordinates":"Origin is in middle of base of rocket; Z axis faces up"
+  },
+  "Resources":{
+      "LOX":{"Capacity":{"Value":950, "Unit":"tonne", "Purpose":"Propellant"}},
+      "CH4":{"Capacity":{"Value":250, "Unit":"tonne", "Purpose":"Propellant"}}
+  },
+  "Components":{
+     "Hull":{"Species":"Transport/Rocket/Component/Starship Stainless 30x Hull"},
+     "Main Engines":[
+         {"Species":"Transport/Rocket/Component/Raptor Engine","At":{"Location":[3,0,5],"Angle":[0,0,0]}},
+         {"Species":"Transport/Rocket/Component/Raptor Engine","At":{"Location":[-1,2,5],"Angle":[0,0,120]}},
+         {"Species":"Transport/Rocket/Component/Raptor Engine","At":{"Location":[-1,-2,5],"Angle":[0,0,240]}}
+     ],
+     "Vacuum Engines":[
+         {"Species":"Transport/Rocket/Component/Vacuum Raptor","At":{"Location":[-4,0,6],"Angle":[0,0,180]}},
+         {"Species":"Transport/Rocket/Component/Vacuum Raptor","At":{"Location":[1,3,6],"Angle":[0,0,60]}},
+         {"Species":"Transport/Rocket/Component/Vacuum Raptor","At":{"Location":[-1,-3,6],"Angle":[0,0,300]}}
+     ],
+     "Heatshield":{"Species":"Transport/Rocket/Component/Starship Heatshield"}
+  }
+}
+

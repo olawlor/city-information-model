@@ -1,0 +1,44 @@
+{
+  "Metadata":{
+    "Species":"Space/Mars/Surface/Dao",
+    "Role":"Surface Volume",
+    "Author":"Orion Lawlor <lawlor@alaska.edu>",
+    "Version":"2020-07-07 pre-alpha",
+    "Purpose":"Dao Vallis overlook and first landing monuments and infrastructure.",
+    "Coordinates":"Origin is first landing.  X is east.  Y is north.  Z is up. "
+  },
+  "Traits":{
+    "Gravity":[0,0,-3.69]
+  },
+  
+  "Components":{
+     "FirstLanding":{
+        "Species":"Transport/Rocket/Starship",
+        "At":{"Location":[0,0,0],"Rotation":[0,0,0]}
+     },
+     
+     "FirstCrashSite":{
+        "Species":"Transport/Rocket/Starship",
+        "At":{"Location":[0,-200,3],"Rotation":[0,90,0]},
+        "Traits":{"Burning":1}
+     }, 
+     
+     
+     "FirstMobileHome":{
+        "Species":"Architecture/Temporary Structures/6m",
+        "At":{"Location":[-100,0,0],"Rotation":[0,0,45]}
+     },
+     
+     "SecondMobileHome":{
+        "Species":"Architecture/Temporary Structures/6m",
+        "At":{"Location":[-70,0,0],"Rotation":[0,0,45]}
+     }
+  },
+  
+  "Volume":{
+    "Type":"Mars",
+    "Purpose":"Geographic bound for surface geometry",
+    "Bound":{"LonLatAlt":[87.75,88.5, -38.5,-38, -6000,-4000]}
+  }
+}
+

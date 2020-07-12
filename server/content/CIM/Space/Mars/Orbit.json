@@ -1,0 +1,35 @@
+{
+  "Metadata":{
+    "Species":"Space/Mars/Orbit",
+    "Role":"Orbital Volume",
+    "Author":"Orion Lawlor <lawlor@alaska.edu>",
+    "Version":"2020-07-07 pre-alpha",
+    "Purpose":"Anchor all Mars orbital infrastructure in a common inertial reference frame.",
+    "Coordinates":"Origin is in the exact center of the planet; Z axis runs through north pole; X axis points toward Mars' vernal equinox.  The planet's surface rotates beneath this volume (this is a non-rotating inertial frame of reference).",
+    "Sources":"Orbital elements for the moons are missing the arguments of perigee.  Other numbers are from https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html"
+  },
+  
+  "Components":{
+     "Phobos":{
+       "Species":"Space/Mars/Orbit/Phobos","At":{
+         "Location":{"Orbiting":["J2000",1.093, 999, 0.0151,0.31891]}, 
+         "Angle":{"Rotating":[0,0,0.31891]}
+       }
+     },
+     "Deimos":{
+       "Species":"Space/Mars/Orbit/Deimos","At":{
+         "Location":{"Orbiting":["J2000",1.79, 999, 0.0005,1.26244]},
+         "Angle":{"Rotating":[0,0,1.26244]}
+       }
+     }
+  }, 
+  
+  "Volume":{
+    "VolumeType":"Vacuum",
+    "Purpose":"Orbital traffic control for Mars sphere of influence.",
+    "Bound":{
+      "Radius":{"Min":100e3, "Max":0.5e6}
+    }
+  }
+}
+

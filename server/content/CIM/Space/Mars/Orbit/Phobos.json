@@ -1,0 +1,24 @@
+{
+  "Metadata":{
+    "Species":"Space/Mars/Orbit/Phobos",
+    "Role":"Moon",
+    "Author":"Orion Lawlor <lawlor@alaska.edu>",
+    "Version":"2020-07-07 pre-alpha",
+    "Purpose":"Represent Mars' larger closer moon.",
+    "Coordinates":"Origin is in the exact center of the moon; Z axis runs through the moon's rotational axis (toward Mars' north pole); X axis points toward Mars (Phobos lat/lon 0,0); Y axis points orbital retrograde.",
+    "Sources":"Data for the moons are from https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html"
+  },
+  "Geometry":{
+    "Bound":[-15000,15000, -12000,12000, -10000,10000],
+    "Render":{
+      "FIXME":"Download from https://solarsystem.nasa.gov/resources/2358/phobos-3d-model/ and convert to a useful format."
+    }
+  },
+  "Resources":{
+    "Moon Mass":{"Value":10.6e15, "Unit":"kg", "Purpose":"Orbital calculations"}
+  },
+  
+  "Components":{
+  }
+}
+
