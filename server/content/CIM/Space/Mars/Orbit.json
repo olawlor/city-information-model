@@ -1,6 +1,6 @@
 {
   "Metadata":{
-    "Species":"Space/Mars/Orbit",
+    "Entity":"Space/Mars/Orbit",
     "Role":"Orbital Volume",
     "Author":"Orion Lawlor <lawlor@alaska.edu>",
     "Version":"2020-07-07 pre-alpha",
@@ -11,13 +11,13 @@
   
   "Components":{
      "Phobos":{
-       "Species":"Space/Mars/Orbit/Phobos","At":{
+       "Entity":"Space/Mars/Orbit/Phobos","At":{
          "Location":{"Orbiting":["J2000",1.093, 999, 0.0151,0.31891]}, 
          "Angle":{"Rotating":[0,0,0.31891]}
        }
      },
      "Deimos":{
-       "Species":"Space/Mars/Orbit/Deimos","At":{
+       "Entity":"Space/Mars/Orbit/Deimos","At":{
          "Location":{"Orbiting":["J2000",1.79, 999, 0.0005,1.26244]},
          "Angle":{"Rotating":[0,0,1.26244]}
        }

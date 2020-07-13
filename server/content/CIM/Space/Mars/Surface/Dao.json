@@ -1,36 +1,41 @@
 {
   "Metadata":{
-    "Species":"Space/Mars/Surface/Dao",
+    "Entity":"Space/Mars/Surface/Dao",
     "Role":"Surface Volume",
     "Author":"Orion Lawlor <lawlor@alaska.edu>",
     "Version":"2020-07-07 pre-alpha",
     "Purpose":"Dao Vallis overlook and first landing monuments and infrastructure.",
     "Coordinates":"Origin is first landing.  X is east.  Y is north.  Z is up. "
   },
+  "Geometry":{
+    "Bound":[-16200,18660, -23990,5650, -6000,-3000],
+    "Map":{"href":"/CDN/Architecture/Urban_Planning/Dao_10m_CTX.jpg"}
+  },
+  
   "Traits":{
     "Gravity":[0,0,-3.69]
   },
   
   "Components":{
      "FirstLanding":{
-        "Species":"Transport/Rocket/Starship",
-        "At":{"Location":[0,0,0],"Rotation":[0,0,0]}
+        "Entity":"Transport/Rocket/Starship",
+        "At":{"Location":[0,0,0],"Rotation":[0,-90,0]}
      },
      
      "FirstCrashSite":{
-        "Species":"Transport/Rocket/Starship",
-        "At":{"Location":[0,-200,3],"Rotation":[0,90,0]},
+        "Entity":"Transport/Rocket/Starship",
+        "At":{"Location":[0,-200,3],"Rotation":[0,0,0]},
         "Traits":{"Burning":1}
      }, 
      
      
      "FirstMobileHome":{
-        "Species":"Architecture/Temporary Structures/6m",
+        "Entity":"Architecture/Temporary_Structures/Modular_6m",
         "At":{"Location":[-100,0,0],"Rotation":[0,0,45]}
      },
      
      "SecondMobileHome":{
-        "Species":"Architecture/Temporary Structures/6m",
+        "Entity":"Architecture/Temporary_Structures/Modular_6m",
         "At":{"Location":[-70,0,0],"Rotation":[0,0,45]}
      }
   },

@@ -1,6 +1,6 @@
 {
   "Metadata":{
-    "Species":"Transport/Rocket/Component/Raptor Engine",
+    "Entity":"Transport/Rocket/Component/Raptor Engine",
     "Role":"Rocket Engine",
     "Author":"Orion Lawlor <lawlor@alaska.edu>",
     "Version":"2020-07-04 pre-alpha",

@@ -1,6 +1,6 @@
 {
   "Metadata":{
-    "Species":"Space/Mars/Orbit/Phobos",
+    "Entity":"Space/Mars/Orbit/Phobos",
     "Role":"Moon",
     "Author":"Orion Lawlor <lawlor@alaska.edu>",
     "Version":"2020-07-07 pre-alpha",

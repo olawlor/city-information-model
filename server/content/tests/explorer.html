@@ -3,67 +3,71 @@
 <title>Nexus Aurora Mars CIM Explorer</title>
 <script src="/CIM/js/CIM.js" ></script>
 </head>
-<body>
-<h1>Nexus Aurora Mars CIM: Text-based Explorer</h1>
+<body bgcolor="#C0A080">
+<h1>Nexus Aurora Mars CIM: Text-based Entity Explorer</h1>
 
-<pre id="history"></pre>
-CIM Species: <input type="text" size=50 id="in" value="Space/Mars" />
+CIM Entity: <input type="text" size=50 id="in" value="Space/Mars" />
 
-<input type="submit" value="Read" onclick="readSpeciesDOM()">
+<input type="submit" value="Read" onclick="readEntityDOM()">
 
 <pre id="out" style="white-space:pre-wrap;"></pre>
 
 <script>
 
-// Emit HTML that adds a species link
-function speciesHyperlink(speciesName) {
-    return '<b><a href=\'javascript:setSpeciesDOM(\"' + speciesName + '\")\' >' 
-                + speciesName + '</a></b>'
+// Emit HTML that adds a entity link
+function entityHyperlink(entityName) {
+    return '<b><a href=\'javascript:setEntityDOM(\"' + entityName + '\")\' >' 
+                + entityName + '</a></b>'
 }
 
-// Add javascript links to species in our components
+// Add javascript links to entity in our components
 //   (HACKY regex implementation, but false positives just create bogus local links, not the end of the world)
 function addHyperlinks(text) {
-  var speciesRegex = /"Species": "([^"]+)"/g;
-  return text.replace(speciesRegex, function(line,species) {
-    //console.log("Hotlinking species '"+species+"'");
-    return '"Species": '+speciesHyperlink(species);
+  var entityRegex = /"(Entity|href)": "([^"]+)"/g;
+  return text.replace(entityRegex, function(line,link,entity) {
+    //console.log("Hotlinking entity '"+entity+"'");
+    if (link=="Entity") return '"'+link+'": '+entityHyperlink(entity);
+    else return '"href":<b><a href="'+entity+'">'+entity+'</a></b>';
   })
 }
 
 // Read the DOM input field, and show the result to the output field
-function readSpeciesDOM() 
+function readEntityDOM() 
 {
     var inDOM=document.getElementById("in");
     var outDOM=document.getElementById("out");
-    var speciesName=inDOM.value;
+    var entityName=inDOM.value;
     var display=outDOM;
-    CIM.readSpecies(speciesName, function(species) {
-            var str=JSON.stringify(species,null,2);
-            display.innerHTML=addHyperlinks(str); // <- flush DOM children
+    CIM.readEntity(entityName, function(entity) {
+            var str=JSON.stringify(entity,null,2);
+            display.innerHTML=""; // <- flush DOM children
+            if (entity.Geometry && entity.Geometry.Map && entity.Geometry.Map.href) {
+                display.innerHTML+="<img src='"+entity.Geometry.Map.href+"' height='150px'></img>\n";
+            }
+            display.innerHTML+=addHyperlinks(str);
             //display.appendChild(document.createTextNode(str));
         }
     );
 }
 
-// When a species link is clicked, set the searched species
-function setSpeciesDOM(speciesName)
+// When a entity link is clicked, set the searched entity
+function setEntityDOM(entityName)
 {
-    location.hash=speciesName;
+    location.hash=entityName;
     //  "onhashchange" does the rest
 }
 
-// Return true if the page location hash contains a valid-looking species name
+// Return true if the page location hash contains a valid-looking entity name
 function locationHashValid() {
     return location.hash!="" && location.hash.startsWith("#") && location.hash.length>=4;
 }
 
-// Pull the initial species from the URL, if specified
+// Pull the initial entity from the URL, if specified
 window.onhashchange=function() {
     if (locationHashValid()) {
-        var speciesNameEncoded = location.hash.substring(1); // remove '#'
-        document.getElementById("in").value = decodeURIComponent(speciesNameEncoded);
-        readSpeciesDOM();
+        var entityNameEncoded = location.hash.substring(1); // remove '#'
+        document.getElementById("in").value = decodeURIComponent(entityNameEncoded);
+        readEntityDOM();
     }
 }
 
@@ -75,8 +79,8 @@ if (locationHashValid())
 }
 else 
 {
-    // Just use the initial default species
-    readSpeciesDOM();
+    // Just use the initial default entity
+    readEntityDOM();
 }
 </script>
 

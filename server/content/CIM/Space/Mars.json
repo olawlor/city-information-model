@@ -1,6 +1,6 @@
 {
   "Metadata":{
-    "Species":"Space/Mars",
+    "Entity":"Space/Mars",
     "Role":"Planet",
     "Author":"Orion Lawlor <lawlor@alaska.edu>",
     "Version":"2020-07-07 pre-alpha",
@@ -18,10 +18,12 @@
   
   "Components":{
      "Surface":{
-       "Species":"Space/Mars/Surface","At":{"Location":[0,0,0],"Angle":{"Rotating":[0,0,1.0274875]}}
+       "Entity":"Space/Mars/Surface",
+       "At":{"Location":[0,0,0],"Angle":{"Rotating":[0,0,1.0274875]}}
      },
      "Orbit":{
-       "Species":"Space/Mars/Orbit","At":{"Location":[0,0,0],"Angle":[0,0,0]}
+       "Entity":"Space/Mars/Orbit",
+       "At":{"Location":[0,0,0],"Angle":[0,0,0]}
      }
   }
 }

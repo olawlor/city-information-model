@@ -1,6 +1,6 @@
 {
   "Metadata":{
-    "Species":"Space/Mars/Surface",
+    "Entity":"Space/Mars/Surface",
     "Role":"Surface Volume",
     "Author":"Orion Lawlor <lawlor@alaska.edu>",
     "Version":"2020-07-07 pre-alpha",
@@ -19,21 +19,21 @@
   
   "Components":{
      "Dao":{
-       "Species":"Space/Mars/Surface/Dao","At":{
+       "Entity":"Space/Mars/Surface/Dao","At":{
          "LonLatAlt":[88.04026105265709,-38.11078211921923,-4800]
        },
        "AKA":["First Landing Site","Initial Landing Zone"]
      },
      
      "Geim":{
-       "Species":"Space/Mars/Surface/Geim","At":{
+       "Entity":"Space/Mars/Surface/Geim","At":{
          "LonLat":[88.46781415834512,-37.73151877873819,-4585]
        },
        "AKA":["Geim Crater","Industrial Zone","Mining Zone"]
      },
      
      "Capital":{
-       "Species":"Space/Mars/Surface/Capital","At":{
+       "Entity":"Space/Mars/Surface/Capital","At":{
          "LonLat":[88.04726920969004,-38.03952581865086,-4600]
        },
        "AKA":["Hellas Capital","Farming Zone"]
@@ -42,7 +42,7 @@
   
   "Volume":{
     "VolumeType":"Mars",
-    "Purpose":"Geographic bound for loose surface geometry (not part of developed area)",
+    "Purpose":"Geographic bound for loose surface geometry (not part of a developed area)",
     "Bound":{"LonLatAlt":[-180,180, -90,90, -7500,27000]}
   }
 }

@@ -1,29 +1,50 @@
 {
   "Metadata":{
-    "Species":"Transport/Rocket/Starship",
+    "Entity":"Transport/Rocket/Starship",
     "Role":"Rocket",
     "Author":"Orion Lawlor <lawlor@alaska.edu>",
     "Version":"2020-07-04 pre-alpha",
     "Purpose":"Example CIM file, for testing parsing",
-    "Coordinates":"Origin is in middle of base of rocket; Z axis faces up"
+    "Coordinates":"Origin is in middle of base of rocket; X axis faces up; Y axis faces the left fin (this is the SpaceX coordinate system).",
+    "Ownership":"Starship is a rocket designed and built by SpaceX."
   },
+  "Geometry":{
+    "Bound":[0,50, -10,10, -5,5],
+    "Map":{"href":"/CDN/Transport/Rocket/Starship.png"},
+    "Rendering":[
+        {"tris":100, "href":"/CDN/Transport/Rocket/Starship_0K.stl"},
+        {"tris":1000, "href":"/CDN/Transport/Rocket/Starship_1K.stl"}
+    ]
+  },
+  
   "Resources":{
       "LOX":{"Capacity":{"Value":950, "Unit":"tonne", "Purpose":"Propellant"}},
       "CH4":{"Capacity":{"Value":250, "Unit":"tonne", "Purpose":"Propellant"}}
   },
   "Components":{
-     "Hull":{"Species":"Transport/Rocket/Component/Starship Stainless 30x Hull"},
-     "Main Engines":[
-         {"Species":"Transport/Rocket/Component/Raptor Engine","At":{"Location":[3,0,5],"Angle":[0,0,0]}},
-         {"Species":"Transport/Rocket/Component/Raptor Engine","At":{"Location":[-1,2,5],"Angle":[0,0,120]}},
-         {"Species":"Transport/Rocket/Component/Raptor Engine","At":{"Location":[-1,-2,5],"Angle":[0,0,240]}}
-     ],
-     "Vacuum Engines":[
-         {"Species":"Transport/Rocket/Component/Vacuum Raptor","At":{"Location":[-4,0,6],"Angle":[0,0,180]}},
-         {"Species":"Transport/Rocket/Component/Vacuum Raptor","At":{"Location":[1,3,6],"Angle":[0,0,60]}},
-         {"Species":"Transport/Rocket/Component/Vacuum Raptor","At":{"Location":[-1,-3,6],"Angle":[0,0,300]}}
-     ],
-     "Heatshield":{"Species":"Transport/Rocket/Component/Starship Heatshield"}
+     "Hull":{"Entity":"Transport/Rocket/Component/Starship_Stainless_Hull"},
+     
+     "Rap0":{"Entity":"Transport/Rocket/Component/Raptor_Engine",
+          "At":{"Location":[5,3,0],"Angle":[0,0,0]}
+         },
+     "Rap1":{"Entity":"Transport/Rocket/Component/Raptor_Engine",
+          "At":{"Location":[5,-1,2],"Angle":[120,0,0]}
+         },
+     "Rap2":{"Entity":"Transport/Rocket/Component/Raptor_Engine",
+          "At":{"Location":[5,-1,-2],"Angle":[240,0,0]}
+         },
+     
+     "Vac0":{"Entity":"Transport/Rocket/Component/Vacuum_Raptor",
+          "At":{"Location":[6,-4,0],"Angle":[180,0,0]}
+         },
+     "Vac1":{"Entity":"Transport/Rocket/Component/Vacuum_Raptor",
+          "At":{"Location":[6,1,3],"Angle":[60,0,0]}
+         },
+     "Vac2":{"Entity":"Transport/Rocket/Component/Vacuum_Raptor",
+          "At":{"Location":[6,-1,-3],"Angle":[300,0,0]}
+         },
+     
+     "Heatshield":{"Entity":"Transport/Rocket/Component/Starship_Heatshield"}
   }
 }
 

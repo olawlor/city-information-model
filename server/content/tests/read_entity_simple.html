@@ -7,14 +7,14 @@
 <h1>CIM Test/Demo Page</h1>
 
 <script>
-CIM.readSpecies("Transport/Rocket/Starship", 
-    function(species) {
-        var location=species.Components["Vacuum Engines"][0].At.Location;
+CIM.readEntity("Transport/Rocket/Starship", 
+    function(entity) {
+        var location=entity.Components.Vac0.At.Location;
         var str="XYZ location of the first vacuum raptor: "+
                 JSON.stringify(location,null,2)+
                 "\n\n";
         str+="All Components in a Starship: "+
-                JSON.stringify(species.Components,null,2)+
+                JSON.stringify(entity.Components,null,2)+
                 "\n\n";
         
         console.log(str);
