@@ -18,8 +18,9 @@
   },
   
   "Resources":{
-      "LOX":{"Capacity":{"Value":950, "Unit":"tonne", "Purpose":"Propellant"}},
-      "CH4":{"Capacity":{"Value":250, "Unit":"tonne", "Purpose":"Propellant"}}
+      "LOX_Max":{"Value":950, "Unit":"tonne", "Purpose":"Propellant"},
+      "CH4_Max":{"Value":250, "Unit":"tonne", "Purpose":"Propellant"},
+      "Mass":{"Value":99, "Unit":"tonne", "Purpose":"Dry Mass"}
   },
   "Components":{
      "Hull":{"Entity":"Transport/Rocket/Component/Starship_Stainless_Hull"},

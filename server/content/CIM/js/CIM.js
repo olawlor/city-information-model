@@ -38,7 +38,7 @@ function vec3(arg,y,z) {
     else {  // given at least 2 arguments
         this.x=arg;
         this.y=y;
-        this.z=z?z:0.0;
+        this.z=(z!==undefined)?z:0.0;
     }
 }
 
@@ -48,6 +48,7 @@ vec3.prototype.p = function(b) {
 }
 vec3.prototype.pe = function(b) {
     this.x+=b.x; this.y+=b.y; this.z+=b.z;
+    return this;
 }
 
 /// m = minus, subtracts vectors
@@ -56,6 +57,7 @@ vec3.prototype.m = function(b) {
 }
 vec3.prototype.me = function(b) {
     this.x-=b.x; this.y-=b.y; this.z-=b.z;
+    return this;
 }
 
 /// t = times, multiplies a vector by a scalar
@@ -64,17 +66,27 @@ vec3.prototype.t = function(b) {
 }
 vec3.prototype.te = function(b) {
     this.x*=b; this.y*=b; this.z*=b;
+    return this;
 }
 
-/// Compute euclidean length of vector
+/// Return the euclidean length of vector
 vec3.prototype.length = function() { 
     return Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z);
 }
 
-/// Compute dot product of these two vectors
+/// Make this vector have length 1 (normalize the length)
+vec3.prototype.normalize = function() {
+    var len=this.length();
+    if (len) return this.te(1.0/length);
+    else return this; // zero vector
+}
+
+/// Compute the dot product of these two vectors
 vec3.prototype.dot = function(b) {
     return this.x*b.x+this.y*b.y+this.z*b.z;
 }
+
+
 
 
 
@@ -99,7 +111,7 @@ CIM={
  @param[in] callback      User defined function taking one argument, which is the parsed entity object returned from the server, or CIM.invalid if there was a network or JSON parse error.
  
 */
-CIM.readEntity=function(entityName,callback) {
+CIM.Read_Entity_Async=function(entityName,callback) {
     // Check the cache
     var cacheline=CIM.cache.entity[entityName];
     if (cacheline) {
@@ -116,7 +128,7 @@ CIM.readEntity=function(entityName,callback) {
     { // Cache miss
         // New cacheline setup
         cacheline={
-            data:CIM.invalid, // parsed JSON
+            data:null, // <- will contain parsed JSON
             waitlist:[callback], // list of callbacks waiting for data
             valid:false 
         };
@@ -129,6 +141,7 @@ CIM.readEntity=function(entityName,callback) {
         req.open('GET', path, true); 
         req.onreadystatechange = function () {
             if (req.readyState == 4) {
+                cacheline.data=CIM.invalid; //<- server gave us a definitive answer
                 if (req.status == "200") {
                     try {
                         cacheline.rawData=req.responseText;
@@ -141,9 +154,9 @@ CIM.readEntity=function(entityName,callback) {
                     console.log("Entity "+entityName+" error HTTP "+req.status);
                 }
                 
-                // Data arrived: fire all queued callbacks
+                // Data arrived: fire all waiting callbacks
                 //   (if 404 or bad JSON, fires with CIM.invalid)
-                cacheline.waitlist.forEach(callback => callback(cacheline.data));
+                cacheline.waitlist.forEach(w => w(cacheline.data));
                 cacheline.waitlist=[];
             }
         };
@@ -151,13 +164,110 @@ CIM.readEntity=function(entityName,callback) {
     }
 }
 
-/** Given a entity name, callback(true) if the entity exists on the server,
-or callback(false) if there is no such entity. */
-CIM.entityValid=function(entityName,callback) {
-    CIM.readEntity(entityName,function(entityObject) {
-        callback(entityObject!=CIM.invalid);
-    });
+
+/** Add up these two "Resources" objects into the target.
+    Works like   target += source; 
+    
+    @param[inout] target  Resource object getting added to.
+    @param[in] source  Read-only resource object getting read from.
+*/
+CIM.Add_Resources = function (target,source) 
+{
+    for (resource in source) 
+    {
+        if (target[resource]) 
+        { // target already exists, need to merge
+            var t=target[resource];
+            var s=source[resource];
+            if (t.Value !== undefined && s.Value!== undefined)
+            { // need to combine Values
+                if (t.Unit == s.Unit) { // same units (common case)
+                    t.Value += s.Value;
+                } 
+                else if (t.Unit == "tonne" && s.Unit == "kg") {
+                    t.Value += 1.0e-3 * s.Value;
+                } 
+                else if (t.Unit == "kg" && s.Unit == "g") {
+                    t.Value += 1.0e-3 * s.Value;
+                } 
+                else if (t.Unit == "tonne" && s.Unit == "g") {
+                    t.Value += 1.0e-6 * s.Value;
+                } 
+                else 
+                { // Be conservative: don't silently combine different units just because they have the same name
+                    if (!t.IncompatibleUnits)
+                        t.IncompatibleUnits=[];
+                    t.IncompatibleUnits.push(s);
+                }
+            }
+        }
+        else 
+        { // New resource, just (deep) copy
+            target[resource]=JSON.parse(JSON.stringify(source[resource]));
+        }
+    }
 }
+
+/** Loop over each of the local components of this entity object,
+   and call the callback for each component. 
+   
+   @param[in] entity  Parsed Entity object.
+   @param[callbac] callback  Function taking the component object, and optional component string name.
+*/
+CIM.Component_Loop = function(entity,callback) {
+    for (componentName in entity.Components) 
+    {
+        var comp=entity.Components[componentName];
+        callback(comp,componentName);
+    }
+}
+
+/** Roll up all cumulative Resources used by this Entity
+and all its components (and all their components, and so on).
+Eventually calls callback(resources).
+*/
+CIM.Component_Resources_Async = function(entityName,callback) {
+    CIM.Read_Entity_Async(entityName,
+        function(entity) 
+        {
+            var waiting=0; //<- resource requests still outstanding
+            var resources=entity.Resources; //<- will accumulate our resources
+            
+            function check_done() {
+                if (waiting==0) { 
+            console.log("Calling resources callback for "+entityName);
+                    callback(resources); 
+                    waiting=-999; 
+                }
+            }
+            
+            if (entity.Components) 
+            {
+                CIM.Component_Loop(entity, component => waiting++);
+                if (waiting>0) // Copy, to not trash original during total-up
+                    resources=JSON.parse(JSON.stringify(resources)); 
+                CIM.Component_Loop(entity, 
+                    function (component,componentName) 
+                    { // Total up this subcomponent's resources.
+                        CIM.Component_Resources_Async(
+                            component.Entity,
+                            function(compRes) {
+                                CIM.Add_Resources(resources,compRes);
+                                waiting--;
+                        console.log("From "+entityName+" wait "+waiting+" JSON target "+JSON.stringify(resources)+"   JSON compRes "+JSON.stringify(compRes));
+                                check_done();
+                            }
+                        );
+                    }
+                );
+            }
+            
+            check_done();
+        }
+    );
+}
+
+
 
 
 

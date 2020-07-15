@@ -1,0 +1,18 @@
+{
+  "Metadata":{
+    "Entity":"Transport/Rocket/Component/Vacuum_Raptor",
+    "Role":"Rocket Engine",
+    "Author":"Orion Lawlor <lawlor@alaska.edu>",
+    "Version":"2020-07-13 pre-alpha",
+    "Purpose":"Example CIM file, for testing parsing and resource usage",
+    "Coordinates":"Origin is at the gimbal mount just behind the combustion chamber; Z axis faces opposite the thrust direction"
+  },
+  
+  "Resources":{
+    "Mass":{"Value": 500, "Unit":"kg", "Purpose":"Dry Mass"},
+    "Niobium_Scrap":{"Value": 8, "Unit":"kg", "Purpose":"Scrap Niobium in vacuum nozzle"}
+   }
+  
+  
+}
+

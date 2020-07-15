@@ -7,7 +7,7 @@
 <h1>CIM Test/Demo Page</h1>
 
 <script>
-CIM.readEntity("Transport/Rocket/Starship", 
+CIM.Read_Entity_Async("Transport/Rocket/Starship", 
     function(entity) {
         var location=entity.Components.Vac0.At.Location;
         var str="XYZ location of the first vacuum raptor: "+
