@@ -38,7 +38,7 @@ function readEntityDOM()
     var outDOM=document.getElementById("out");
     var entityName=inDOM.value;
     var display=outDOM;
-    CIM.Read_Entity_Async(entityName, function(entity) {
+    CIM.Entity.Read_Async(entityName, function(entity) {
             var str=JSON.stringify(entity,null,2);
             display.innerHTML=""; // <- flush DOM children
             if (entity.Geometry && entity.Geometry.Map && entity.Geometry.Map.href) {
@@ -47,7 +47,7 @@ function readEntityDOM()
             display.innerHTML+=addHyperlinks(str);
             
             // Total up subcomponent resources
-            CIM.Component_Resources_Async(entityName,
+            CIM.Resources.Total_Async(entityName,
                 function(resources)
                 {
                     display.innerHTML+="<h2>Resources</h2>\n"
