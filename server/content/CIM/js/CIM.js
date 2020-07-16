@@ -558,6 +558,7 @@ CIM.Resources.Total_Async = function(entityName,callback) {
         {
             var waiting=0; //<- resource requests still outstanding
             var resources=entity.Resources; //<- will accumulate our resources
+            if (!resources) resources={};
             
             function check_done() {
                 if (waiting==0) { 
@@ -570,7 +571,7 @@ CIM.Resources.Total_Async = function(entityName,callback) {
             if (entity.Components) 
             {
                 CIM.Component.Loop(entity, component => waiting++);
-                if (waiting>0 && resources) // Copy, to not trash original during total-up
+                if (waiting>0) // Copy, to not trash original during total-up
                     resources=JSON.parse(JSON.stringify(resources)); 
                 CIM.Component.Loop(entity, 
                     function (component,componentName) 
